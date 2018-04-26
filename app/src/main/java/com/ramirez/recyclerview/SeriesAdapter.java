@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -16,18 +18,27 @@ import java.util.ArrayList;
  */
 
 public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
+
     private ArrayList<Serie> series;
 
     @Override
     public SeriesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cardview,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cardview,parent,false);
         return (new SeriesViewHolder(v));
     }
 
     @Override
-    public void onBindViewHolder(SeriesViewHolder holder, int position) {
+    public void onBindViewHolder(final SeriesViewHolder holder, final int position) {
         holder.name.setText(series.get(position).getName());
         holder.img.setImageResource(series.get(position).getImg());
+
+
+        holder.buttonVer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Pelicula: "+ series.get(position).getName() + ". Numero de Peliculas: " + series.get(position).getCaps() + ". Descripcion: " + series.get(position).getDesc(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -40,14 +51,24 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         CardView card;
         TextView name;
         ImageView img;
+        Button buttonVer;
 
         public SeriesViewHolder(View itemView){
             super(itemView);
-            card=itemView.findViewById(R.id.card_view);
-            name=itemView.findViewById(R.id.name);
-            img=itemView.findViewById(R.id.img);
+            card = itemView.findViewById(R.id.card_view);
+            name = itemView.findViewById(R.id.name);
+            img = itemView.findViewById(R.id.img);
+            buttonVer = itemView.findViewById(R.id.ButtonVer);
+
         }
     }
 
-    public SeriesAdapter(ArrayList<Serie> series){this.series=series;}
+    public SeriesAdapter(ArrayList<Serie> series){ this.series = series;}
+
+
+
+
+
+
 }
+
